@@ -77,7 +77,7 @@ The following has been tested with Fedora 33 and Debian 10 templates:
 
 4. Test your client configuration!
 
-   Run the VPN client from a CLI prompt in the 'qtunnel' folder, preferably as root.
+   Run the VPN client as root from a CLI prompt in the 'qtunnel' folder.
 
    For example:
 
