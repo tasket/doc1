@@ -78,7 +78,7 @@ This method has extended anti-leak features that also make the connection _fail 
 
 4. Test your client configuration!
 
-   Run the VPN client as root from a CLI prompt in the 'qtunnel' folder.
+   Run the VPN client as root from a terminal prompt in the 'qtunnel' folder.
 
    For example:
 
@@ -95,9 +95,20 @@ This method has extended anti-leak features that also make the connection _fail 
    Terminate `openvpn` by pressing _ctrl-c_, then proceed to the next step when you're sure the basic VPN connection works.
 
 
-5. Restart the new VM!
+5. Setup the qubes-tunnel service
 
-The link should then be established automatically with a popup notification to that effect.
+   In the VPN VM terminal run the setup (you will be asked for your VPN login credentials), then shut down the VM:
+
+      sudo /usr/lib/qubes/qtunnel-setup --config
+      sudo halt
+
+6. Enable the service and start the connection!
+
+   In a dom0 terminal, type:
+      qvm-service sys-vpn qubes-tunnel on
+      qvm-start sys-vpn
+
+The link should then be established automatically with a popup notification to that effect. From this point, the VPN will run whenever the VPN VM is started!
 
 
 Usage
