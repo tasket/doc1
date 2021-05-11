@@ -36,21 +36,22 @@ Set up a ProxyVM as a VPN gateway using the *qubes-tunnel* service
 
 This method has extended anti-leak features that also make the connection _fail closed_ should it be interrupted[1]. It also has the advantage of using configuration files tailored by your VPN service provider so it may be the easiest way to setup a working and secure link.
 
-The following has been tested with Fedora 33 and Debian 10 templates:
+1. Configure a template
 
-1. Create a new VPN VM
+   Choose a Debian or Fedora template to run the VPN VM (these instructions have been tested with Fedora 33 and Debian 10 templates) and install the `qubes-repo-contrib` package. Next, install `qubes-tunnel` and the VPN client (either `openvpn` or `wireguard`).
 
-    Launch the qube/VM creation tool, give the qube a name like _sys-vpn_, select a Debian or Fedora Template, and choose _sys-net_ or _sys-firewall_ for Networking. Next, select _'provides network'_ then click _OK_.
+   Note:  If your TemplateVM is one of the "minimal" types, you may need to install additional networking packages as well .....PUT LINK HERE.....
+
+   Shut down the template VM when finished with the package installation.
+
+2. Create a new VPN VM
+
+    Launch the qube/VM creation tool, give the qube a name like _'sys-vpn'_, select the template from the prior step, and choose _sys-net_ or _sys-firewall_ for Networking. Next, select _'provides network'_ then click _OK_.
 
    ![Create\_New\_VM.png](/attachment/wiki/VPN/Create_New_VM.png)
 
-   Note:  If your choice of TemplateVM doesn't already have the VPN client software, you'll need to install its package such as `openvpn` in the template before proceeding; qubes-tunnel uses openvpn by default. If your TemplateVM is one of the "minimal" types, you may need to install additional networking packages as well .....PUT LINK HERE.....
 
-2. Additional VM settings
-
-   A settings window for the new VPN VM should appear from the last step. Choose the _Services_ tab, then choose 'custom' in the dropdown box and click _Add_. then add 'qubes-tunnel'. Finally, for the service name enter 'qubes-tunnel' and click _OK_.
-
-3. Set up the VPN client.
+3. Add the VPN configurtion files
 
    Make sure the new VPN VM and its TemplateVM are not running.
    Run a terminal (CLI) in the VPN VM -- this will start the VM.
@@ -59,20 +60,18 @@ The following has been tested with Fedora 33 and Debian 10 templates:
        sudo mkdir /rw/config/qtunnel
 
 
-    Obtain the configuration files from your VPN service provider[2] then copy them to the `/rw/config/qtunnel` folder. Finally, copy the desired config file to `qtunnel.conf`. For example:
+   Obtain the configuration files from your VPN service provider[2] then copy them to the `/rw/config/qtunnel` folder. Finally, copy the desired config file to `qtunnel.conf`. For example:
 
-   ~~~
-   $ cd /rw/config/qtunnel
-   $ sudo unzip ~/acme-ovpn-example.zip
-   Archive:  acme-ovpn-example.zip
-    extracting: US_Northeast.conf
-    extracting: US_Northwest.conf
-    extracting: US_Southeast.conf
-    extracting: US_Southwest.conf
-    extracting: acme_vpn_ca.crt
-   
-   $ sudo cp US_Northeast.conf qtunnel.conf
-   ~~~
+      $ cd /rw/config/qtunnel
+      $ sudo unzip ~/acme-ovpn-example.zip
+      Archive:  acme-ovpn-example.zip
+       extracting: US_Northeast.conf
+       extracting: US_Northwest.conf
+       extracting: US_Southeast.conf
+       extracting: US_Southwest.conf
+       extracting: acme_vpn_ca.crt
+      
+      $ sudo cp US_Northeast.conf qtunnel.conf
 
 
 4. Test your client configuration!
@@ -93,24 +92,8 @@ The following has been tested with Fedora 33 and Debian 10 templates:
 
    Terminate `openvpn` by pressing _ctrl-c_, then proceed to the next step when you're sure the basic VPN connection works.
 
-5. Download and install qubes-tunnel
 
-   At a CLI prompt in the VPN VM, clone the qubes-tunnel repository:
-
-      $ git clone https://github.com/QubesOS-contrib/qubes-tunnel.git
-
-   (Optionally, signatures [can be verified](https://git-scm.com/docs/git-verify-commit) at this point for security.)
-
-   Next, type the following to automatically install qubes-tunnel, enable firewall rules and save your login information:
-
-      $ cd qubes-tunnel
-      sudo /usr/lib/qubes/qtunnel-setup --config
-
-   If username and password aren't used by your VPN provider you may leave these blank.
-
-   On the _Services_ tab of the VPN VM settings, add `qubes-tunnel` and make sure it is checked, then click 'OK'. This starts the qubes-tunnel service when the proxyVM starts.
-
-6. Restart the new VM!
+5. Restart the new VM!
 
 The link should then be established automatically with a popup notification to that effect.
 
@@ -146,3 +129,4 @@ Notes
 [2] Most VPN providers with OpenVPN access offer tailored configuration files for the user to download and use. These are typically avaiable in the "Support" section of the providers' website.
 
 [3] Routing of traffic through the tunnel is usually preconfigured by the VPN provider; This happens automatically and can be seen in `openvpn` log output as `redirect-gateway def1`. If necessary, the user can manually add this directive to the ovpn/conf file.
+
