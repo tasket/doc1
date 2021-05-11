@@ -81,7 +81,7 @@ The following has been tested with Fedora 33 and Debian 10 templates:
 
    For example:
 
-       sudo openvpn --cd /rw/config/qtunnel --config qtunnel.conf --verb 5
+       sudo openvpn --config qtunnel.conf --auth-user-pass
 
    Watch for status messages that indicate whether the connection is successful; In the case of `openvpn` it should display _"Initialization sequence completed"_. Testing can be done from another VPN VM terminal window using a `ping` command like:
 
@@ -95,14 +95,15 @@ The following has been tested with Fedora 33 and Debian 10 templates:
 
 5. Download and install qubes-tunnel
 
-   At a CLI prompt in the VPN VM, clone the qubes-tunnel repository and verify signature(s):
+   At a CLI prompt in the VPN VM, clone the qubes-tunnel repository:
 
       $ git clone https://github.com/QubesOS-contrib/qubes-tunnel.git
-      $ cd qubes-tunnel
-      $ git log --show-signature -1
+
+   (Optionally, signatures [can be verified](https://git-scm.com/docs/git-verify-commit) at this point for security.)
 
    Next, type the following to automatically install qubes-tunnel, enable firewall rules and save your login information:
 
+      $ cd qubes-tunnel
       sudo /usr/lib/qubes/qtunnel-setup --config
 
    If username and password aren't used by your VPN provider you may leave these blank.
