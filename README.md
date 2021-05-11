@@ -62,10 +62,16 @@ The following has been tested with Fedora 33 and Debian 10 templates:
     Obtain the configuration files from your VPN service provider[2] then copy them to the `/rw/config/qtunnel` folder. Finally, copy the desired config file to `qtunnel.conf`. For example:
 
    ~~~
-   cd /rw/config/qtunnel
-   sudo unzip ~/ovpn-configs-example.zip
-   ######   ADD EXAMPLE OUTPUT HERE   #####
-   sudo cp US_East.ovpn qtunnel.conf
+   $ cd /rw/config/qtunnel
+   $ sudo unzip ~/acme-ovpn-example.zip
+   Archive:  acme-ovpn-example.zip
+    extracting: US_Northeast.conf
+    extracting: US_Northwest.conf
+    extracting: US_Southeast.conf
+    extracting: US_Southwest.conf
+    extracting: acme_vpn_ca.crt
+   
+   $ sudo cp US_Northeast.conf qtunnel.conf
    ~~~
 
 
