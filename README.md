@@ -62,16 +62,18 @@ This method has extended anti-leak features that also make the connection _fail 
 
    Obtain the configuration files from your VPN service provider[2] then copy them to the `/rw/config/qtunnel` folder. Finally, copy the desired config file to `qtunnel.conf`. For example:
 
-      $ cd /rw/config/qtunnel
-      $ sudo unzip ~/acme-ovpn-example.zip
-      Archive:  acme-ovpn-example.zip
-       extracting: US_Northeast.conf
-       extracting: US_Northwest.conf
-       extracting: US_Southeast.conf
-       extracting: US_Southwest.conf
-       extracting: acme_vpn_ca.crt
+   ~~~
+   $ cd /rw/config/qtunnel
+   $ sudo unzip ~/acme-ovpn-example.zip
+   Archive:  acme-ovpn-example.zip
+    extracting: US_Northeast.conf
+    extracting: US_Northwest.conf
+    extracting: US_Southeast.conf
+    extracting: US_Southwest.conf
+    extracting: acme_vpn_ca.crt
       
       $ sudo cp US_Northeast.conf qtunnel.conf
+   ~~~
 
 
 4. Test your client configuration!
